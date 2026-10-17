@@ -25,29 +25,30 @@
 
   <style>
     :root {
-      --bg: #0b0f19;
-      --card-bg: #151d2f;
-      --card-hover: #1c263d;
-      --border: #23314d;
-      --text-main: #f1f5f9;
-      --text-muted: #94a3b8;
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
-      --success: #10b981;
-      --glow: rgba(59, 130, 246, 0.15);
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-hover-border: #16a34a;
+      --formula-bg: #f1f5f9;
+      --border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent: #16a34a;
+      --accent-hover: #15803d;
+      --accent-light: #ecfdf5;
+      --accent-text: #065f46;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
       background-color: var(--bg);
       color: var(--text-main);
-      padding: 1.5rem 1rem 3rem;
+      padding: 2rem 1rem 3rem;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -64,12 +65,27 @@
       text-align: center;
     }
 
+    .back-nav {
+      display: inline-block;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.15s ease;
+    }
+
+    .back-nav:hover {
+      text-decoration: underline;
+      color: var(--accent-hover);
+    }
+
     h1 {
       font-size: 1.75rem;
       font-weight: 700;
       letter-spacing: -0.02em;
-      margin-bottom: 0.4rem;
-      color: #ffffff;
+      margin-bottom: 0.35rem;
+      color: var(--text-main);
     }
 
     .subtitle {
@@ -79,7 +95,7 @@
 
     /* Batch Controls & Bar */
     .controls-panel {
-      background: #111726;
+      background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1rem 1.25rem;
@@ -89,6 +105,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 0.75rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
     }
 
     .meta-status {
@@ -119,24 +136,26 @@
     }
 
     .btn-secondary {
-      background-color: #1e293b;
+      background-color: #ffffff;
       border-color: var(--border);
       color: var(--text-main);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
 
     .btn-secondary:hover {
-      background-color: #27354d;
-      border-color: #3b82f6;
+      background-color: var(--accent-light);
+      border-color: var(--accent);
+      color: var(--accent-text);
     }
 
     .btn-primary {
       background-color: var(--accent);
       color: #ffffff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     .btn-primary:hover {
       background-color: var(--accent-hover);
-      box-shadow: 0 0 12px var(--glow);
     }
 
     /* Cards Stack */
@@ -153,12 +172,14 @@
       overflow: hidden;
       cursor: pointer;
       user-select: none;
-      transition: border-color 0.2s ease, transform 0.15s ease;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
     }
 
     .card:hover {
-      border-color: #3b82f6;
-      background: var(--card-hover);
+      border-color: var(--card-hover-border);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     }
 
     .card-header {
@@ -182,43 +203,44 @@
       letter-spacing: 0.05em;
       font-weight: 700;
       padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-      background: rgba(59, 130, 246, 0.15);
-      color: #60a5fa;
+      border-radius: 9999px;
+      background: var(--accent-light);
+      color: var(--accent-text);
+      border: 1px solid rgba(22, 163, 74, 0.2);
     }
 
     .card-title {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 600;
       color: var(--text-main);
       line-height: 1.35;
     }
 
     .icon-toggle {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      background: #1e293b;
+      background: #f1f5f9;
       color: var(--text-muted);
-      font-size: 0.8rem;
-      transition: transform 0.2s ease, background 0.2s;
+      font-size: 0.75rem;
+      transition: transform 0.2s ease, background 0.2s, color 0.2s;
     }
 
     .card.revealed .icon-toggle {
       transform: rotate(180deg);
-      background: var(--accent);
-      color: #fff;
+      background: var(--accent-light);
+      color: var(--accent);
     }
 
     .card-body {
       display: none;
       padding: 1.1rem 1.25rem;
-      border-top: 1px dashed var(--border);
-      background: #0f1624;
+      border-top: 1px solid var(--border);
+      background: var(--formula-bg);
     }
 
     .card.revealed .card-body {
@@ -228,15 +250,17 @@
     .formula-display {
       font-size: 1.15rem;
       overflow-x: auto;
-      padding: 0.5rem 0;
-      color: #e2e8f0;
+      padding: 0.4rem 0;
+      color: var(--text-main);
     }
 
     .notes {
       margin-top: 0.6rem;
       font-size: 0.85rem;
-      color: #94a3b8;
+      color: var(--text-muted);
       line-height: 1.45;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 0.5rem;
     }
 
     /* Fallback and loading */
@@ -248,9 +272,9 @@
     }
 
     .error-box {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid #ef4444;
-      color: #fca5a5;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
       padding: 1rem;
       border-radius: 8px;
       margin-bottom: 1.5rem;
@@ -263,6 +287,7 @@
 
   <div class="container">
     <header>
+      <a class="back-nav" href="index.html">&larr; Back to Physics Index</a>
       <h1>Physics Formula Drill</h1>
       <div class="subtitle">Randomized 10-formula batches. Click any card or reveal all.</div>
     </header>

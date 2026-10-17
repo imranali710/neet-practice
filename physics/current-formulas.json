@@ -1,0 +1,50 @@
+[
+  {
+    "chapter": "Gravitation",
+    "title": "Law of Periods (Kepler's 3rd Law)",
+    "formula": "$$T^2 \\propto a^3 \\implies T^2 = \\left(\\frac{4\\pi^2}{GM}\\right) a^3$$",
+    "notes": "Where $T$ is the orbital period and $a$ is the semi-major axis."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Universal Law of Gravitation",
+    "formula": "$$\\vec{F} = -\\frac{G m_1 m_2}{r^2} \\hat{r}$$",
+    "notes": "$G = 6.674 \\times 10^{-11} \\text{ N}\\cdot\\text{m}^2/\\text{kg}^2$."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Acceleration Due to Gravity (Surface)",
+    "formula": "$$g = \\frac{GM}{R^2} = \\frac{4}{3}\\pi \\rho G R$$",
+    "notes": "$M$ is mass of Earth, $R$ is radius, $\\rho$ is mean density."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Acceleration Due to Gravity Below Surface ($d$)",
+    "formula": "$$g_d = g\\left(1 - \\frac{d}{R}\\right)$$",
+    "notes": "Valid for depth $d < R$. At Earth's center ($d = R$), $g = 0$."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Acceleration Due to Gravity Above Surface ($h$)",
+    "formula": "$$g_h = \\frac{g}{\\left(1 + \\frac{h}{R}\\right)^2} \\approx g\\left(1 - \\frac{2h}{R}\\right) \\quad [\\text{for } h \\ll R]$$",
+    "notes": "Always use the exact formula if $h$ is comparable to $R$."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Gravitational Potential Energy",
+    "formula": "$$U(r) = -\\frac{GMm}{r}$$",
+    "notes": "Reference point is at infinity where $U(\\infty) = 0$."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Escape Speed",
+    "formula": "$$v_e = \\sqrt{\\frac{2GM}{R}} = \\sqrt{2gR} \\approx 11.2 \\text{ km/s}$$",
+    "notes": "Independent of projectile mass and launch angle."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Velocity, Time Period & Energy of Satellites",
+    "formula": "$$v_o = \\sqrt{\\frac{GM}{r}}, \\quad T = 2\\pi\\sqrt{\\frac{r^3}{GM}}, \\quad E_{tot} = -\\frac{GMm}{2r} = -K = \\frac{U}{2}$$",
+    "notes": "Where $r = R + h$. Total mechanical energy is negative (bound system)."
+  }
+]
