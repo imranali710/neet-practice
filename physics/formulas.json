@@ -1,0 +1,176 @@
+[
+  {
+    "chapter": "Gravitation",
+    "title": "Law of Periods (Kepler's 3rd Law)",
+    "formula": "$$T^2 \\propto a^3 \\implies T^2 = \\left(\\frac{4\\pi^2}{GM}\\right) a^3$$",
+    "notes": "Where $T$ is the orbital period and $a$ is the semi-major axis."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Universal Law of Gravitation",
+    "formula": "$$\\vec{F} = -\\frac{G m_1 m_2}{r^2} \\hat{r}$$",
+    "notes": "$G = 6.674 \\times 10^{-11} \\text{ N}\\cdot\\text{m}^2/\\text{kg}^2$."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Acceleration Due to Gravity (Surface)",
+    "formula": "$$g = \\frac{GM}{R^2} = \\frac{4}{3}\\pi \\rho G R$$",
+    "notes": "$M$ is mass of Earth, $R$ is radius, $\\rho$ is mean density."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Acceleration Due to Gravity Below Surface ($d$)",
+    "formula": "$$g_d = g\\left(1 - \\frac{d}{R}\\right)$$",
+    "notes": "Valid for depth $d < R$. At Earth's center ($d = R$), $g = 0$."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Acceleration Due to Gravity Above Surface ($h$)",
+    "formula": "$$g_h = \\frac{g}{\\left(1 + \\frac{h}{R}\\right)^2} \\approx g\\left(1 - \\frac{2h}{R}\\right) \\quad [\\text{for } h \\ll R]$$",
+    "notes": "Always use the exact formula if $h$ is comparable to $R$."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Gravitational Potential Energy",
+    "formula": "$$U(r) = -\\frac{GMm}{r}$$",
+    "notes": "Reference point is at infinity where $U(\\infty) = 0$."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Escape Speed",
+    "formula": "$$v_e = \\sqrt{\\frac{2GM}{R}} = \\sqrt{2gR} \\approx 11.2 \\text{ km/s}$$",
+    "notes": "Independent of projectile mass and launch angle."
+  },
+  {
+    "chapter": "Gravitation",
+    "title": "Velocity, Time Period & Energy of Satellites",
+    "formula": "$$v_o = \\sqrt{\\frac{GM}{r}}, \\quad T = 2\\pi\\sqrt{\\frac{r^3}{GM}}, \\quad E_{tot} = -\\frac{GMm}{2r} = -K = \\frac{U}{2}$$",
+    "notes": "Where $r = R + h$. Total mechanical energy is negative (bound system)."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Lorentz Force",
+    "formula": "$$\\vec{F} = q(\\vec{E} + \\vec{v} \\times \\vec{B})$$",
+    "notes": "Magnetic force is always perpendicular to velocity: $\\vec{F}_B \\cdot \\vec{v} = 0$, doing no work."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Magnetic Force on Current-Carrying Conductor",
+    "formula": "$$\\vec{F} = I(\\vec{L} \\times \\vec{B})$$",
+    "notes": "Magnitude: $F = I L B \\sin\\theta$, where $\\theta$ is angle between conductor and field."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Radius of Circular Path in Magnetic Field",
+    "formula": "$$r = \\frac{mv}{qB} = \\frac{p}{qB} = \\frac{\\sqrt{2mK}}{qB} = \\frac{\\sqrt{2mqV}}{qB}$$",
+    "notes": "Centripetal balance: $\\frac{mv^2}{r} = qvB$ when $\\vec{v} \\perp \\vec{B}$."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Angular Frequency in Magnetic Field",
+    "formula": "$$\\omega = \\frac{qB}{m}$$",
+    "notes": "Cyclotron frequency is independent of particle speed and orbit radius."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Time Taken for One Revolution",
+    "formula": "$$T = \\frac{2\\pi}{\\omega} = \\frac{2\\pi m}{qB}$$",
+    "notes": "Depends only on charge-to-mass ratio and magnetic field strength."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Pitch of Helical Motion",
+    "formula": "$$p = v_\\parallel \\cdot T = (v \\cos\\theta)\\left(\\frac{2\\pi m}{qB}\\right)$$",
+    "notes": "Linear distance moved along field lines per single rotational cycle."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Biot-Savart Law & Constants",
+    "formula": "$$d\\vec{B} = \\frac{\\mu_0}{4\\pi} \\frac{I(d\\vec{\\ell} \\times \\hat{r})}{r^2}, \\quad c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}}, \\quad \\frac{\\mu_0}{4\\pi} = 10^{-7} \\text{ T}\\cdot\\text{m/A}$$",
+    "notes": "Relates current element to field contribution at displacement $\\vec{r}$."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Field on Axis of Circular Loop (Element)",
+    "formula": "$$dB = \\frac{\\mu_0 I d\\ell}{4\\pi (R^2 + x^2)}, \\quad dB_x = dB\\sin\\phi = dB\\left(\\frac{R}{\\sqrt{R^2+x^2}}\\right)$$",
+    "notes": "Components perpendicular to axis cancel out by symmetry; axial components sum up."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Field on Axis & Center of Circular Loop",
+    "formula": "$$B_{\\text{axis}} = \\frac{\\mu_0 N I R^2}{2(R^2 + x^2)^{3/2}}, \\quad B_{\\text{center}} = \\frac{\\mu_0 N I}{2R} \\quad [x = 0]$$",
+    "notes": "For points very far on axis ($x \\gg R$): $B \\approx \\frac{\\mu_0 (N I \\pi R^2)}{2\\pi x^3} = \\frac{\\mu_0 M}{2\\pi x^3}$."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Ampere's Circuital Law",
+    "formula": "$$\\oint \\vec{B} \\cdot d\\vec{\\ell} = \\mu_0 I_{\\text{enclosed}}$$",
+    "notes": "Holds for any closed Amperian loop with steady currents."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Magnetic Field inside an Ideal Solenoid",
+    "formula": "$$B = \\mu_0 n I = \\mu_0 \\left(\\frac{N}{L}\\right) I$$",
+    "notes": "Near ends of finite solenoid: $B_{\\text{end}} \\approx \\frac{1}{2}\\mu_0 n I$."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Force Between Two Parallel Current Wires",
+    "formula": "$$\\frac{F}{L} = \\frac{\\mu_0 I_1 I_2}{2\\pi d}$$",
+    "notes": "Parallel currents attract; anti-parallel currents repel."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Torque on Rectangular Loop & Magnetic Dipole",
+    "formula": "$$\\vec{\\tau} = \\vec{M} \\times \\vec{B}, \\quad \\tau = NIAB\\sin\\theta, \\quad \\vec{M} = NI\\vec{A}$$",
+    "notes": "$\\,\\theta$ is angle between magnetic moment $\\vec{M}$ (area vector) and field $\\vec{B}$."
+  },
+  {
+    "chapter": "Moving Charges & Magnetism",
+    "title": "Moving Coil Galvanometer",
+    "formula": "$$I = \\left(\\frac{k}{NAB}\\right) \\theta = G\\theta, \\quad S_i = \\frac{\\theta}{I} = \\frac{NAB}{k}, \\quad S_v = \\frac{\\theta}{V} = \\frac{NAB}{k R_g}$$",
+    "notes": "Radial magnetic field keeps $\\theta = 90^\\circ$ between area and field vectors."
+  },
+  {
+    "chapter": "Alternating Current",
+    "title": "AC: Pure Resistive Circuit",
+    "formula": "$$v = V_m \\sin(\\omega t), \\quad i = I_m \\sin(\\omega t) \\quad \\text{where } I_m = \\frac{V_m}{R}$$",
+    "notes": "Current and voltage are completely in phase ($\\phi = 0$)."
+  },
+  {
+    "chapter": "Alternating Current",
+    "title": "AC: RMS Values & Power in Resistor",
+    "formula": "$$V_{\\text{rms}} = \\frac{V_m}{\\sqrt{2}}, \\quad I_{\\text{rms}} = \\frac{I_m}{\\sqrt{2}}, \\quad P_{\\text{avg}} = V_{\\text{rms}} I_{\\text{rms}} = I_{\\text{rms}}^2 R$$",
+    "notes": "Applicable for sinusoidal AC waveforms."
+  },
+  {
+    "chapter": "Alternating Current",
+    "title": "AC: Pure Capacitive Circuit & Reactance",
+    "formula": "$$i = I_m \\sin\\left(\\omega t + \\frac{\\pi}{2}\\right), \\quad X_C = \\frac{1}{\\omega C} = \\frac{1}{2\\pi f C}$$",
+    "notes": "Current leads voltage by $90^\\circ$ ($\\pi/2$). For DC ($f=0$), $X_C = \\infty$ (blocks DC)."
+  },
+  {
+    "chapter": "Alternating Current",
+    "title": "AC: Pure Inductive Circuit & Reactance",
+    "formula": "$$i = I_m \\sin\\left(\\omega t - \\frac{\\pi}{2}\\right), \\quad X_L = \\omega L = 2\\pi f L$$",
+    "notes": "Current lags voltage by $90^\\circ$ ($\\pi/2$). For DC ($f=0$), $X_L = 0$."
+  },
+  {
+    "chapter": "Alternating Current",
+    "title": "AC: Series LCR Circuit, Impedance & Resonance",
+    "formula": "$$Z = \\sqrt{R^2 + (X_L - X_C)^2}, \\quad \\tan\\phi = \\frac{X_L - X_C}{R}, \\quad f_0 = \\frac{1}{2\\pi\\sqrt{LC}}$$",
+    "notes": "At resonance: $X_L = X_C$, $Z_{\\min} = R$, current is maximum and in phase."
+  },
+  {
+    "chapter": "Alternating Current",
+    "title": "AC: Power in General Circuit & Power Factor",
+    "formula": "$$P_{\\text{avg}} = V_{\\text{rms}} I_{\\text{rms}} \\cos\\phi, \\quad \\cos\\phi = \\frac{R}{Z}$$",
+    "notes": "$\\cos\\phi$ is the power factor. In pure L or C, $\\phi = 90^\\circ \\implies P = 0$ (wattless current)."
+  },
+  {
+    "chapter": "Alternating Current",
+    "title": "AC: Transformer",
+    "formula": "$$\\frac{V_s}{V_p} = \\frac{N_s}{N_p} = \\frac{I_p}{I_s} = k, \\quad \\eta = \\frac{P_{\\text{out}}}{P_{\\text{in}}} \\times 100\\%$$",
+    "notes": "For step-up transformer $k > 1$ ($V_s > V_p, I_s < I_p$); for step-down $k < 1$."
+  }
+]
