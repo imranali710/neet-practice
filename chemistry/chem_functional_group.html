@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCERT Organic Chemistry Matrix</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #1f6feb;
+            --success: #238636;
+            --error: #da3633;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .mode-selectors {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 5px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        button.secondary {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        button.secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        button.active {
+            background-color: var(--accent-hover);
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 8px rgba(88, 166, 255, 0.3);
+        }
+
+        .game-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .instructions {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .identify-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            width: 100%;
+        }
+
+        .group-card {
+            background: #21262d;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 125px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: border-color 0.2s;
+        }
+
+        .group-card:hover {
+            border-color: var(--text-muted);
+        }
+
+        .structure {
+            font-size: 1.6rem;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .meta-details {
+            font-size: 1.05rem;
+            color: var(--accent);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            line-height: 1.4;
+        }
+
+        .group-card.revealed .meta-details {
+            opacity: 1;
+        }
+
+        .priority-flex-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .comparison-layout {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 25px;
+            gap: 20px;
+        }
+
+        .comp-card {
+            background: #21262d;
+            border: 1px solid var(--border-color);
+            padding: 25px 20px;
+            border-radius: 8px;
+            width: 45%;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .comp-card:hover {
+            transform: scale(1.03);
+            border-color: var(--accent);
+        }
+
+        .comp-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .comp-struct {
+            font-family: monospace;
+            font-size: 1.4rem;
+            color: var(--accent);
+            background: #090d13;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .vs-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 10px;
+            min-height: 28px;
+        }
+        .feedback.correct { color: #56d364; }
+        .feedback.incorrect { color: #f85149; }
+
+        .info-panel {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            margin-top: 20px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>NCERT Organic Chemistry Matrix</h2>
+
+    <div class="mode-selectors">
+        <button id="btn-identify" class="active" onclick="switchMode('identify')">Identify Group Matrix</button>
+        <button id="btn-priority" class="secondary" onclick="switchMode('priority')">IUPAC Priority Test</button>
+        <button id="btn-hydrocarbons" class="secondary" onclick="switchMode('hydrocarbons')">Hydrocarbons Matrix</button>
+    </div>
+
+    <div class="game-panel">
+        <div id="instructions" class="instructions"></div>
+
+        <div class="action-bar" id="action-bar"></div>
+
+        <div id="workspace"></div>
+    </div>
+</div>
+
+<script>
+    const functionalGroups = [
+        { name: "Carboxylic Acid", struct: "-COOH", priority: 1 },
+        { name: "Sulphonic Acid", struct: "-SO3H", priority: 2 },
+        { name: "Acid Anhydride", struct: "-CO-O-CO-", priority: 3 },
+        { name: "Ester", struct: "-COOR", priority: 4 },
+        { name: "Acid Chloride", struct: "-COCl", priority: 5 },
+        { name: "Acid Amide", struct: "-CONH2", priority: 6 },
+        { name: "Cyanide / Nitrile", struct: "-C≡N", priority: 7 },
+        { name: "Isocyanide", struct: "-N⁺≡C⁻", priority: 8 },
+        { name: "Aldehyde", struct: "-CHO", priority: 9 },
+        { name: "Ketone", struct: "-CO-", priority: 10 },
+        { name: "Alcohol", struct: "-OH", priority: 11 },
+        { name: "Thiol", struct: "-SH", priority: 12 },
+        { name: "Amine", struct: "-NH2", priority: 13 }
+    ];
+
+    const hydrocarbons = [
+        { name: "Alkane", struct: "C-C" },
+        { name: "Alkene", struct: "C=C" },
+        { name: "Alkyne", struct: "C≡C" },
+        { name: "Arene (Aromatic)", struct: "Benzene Ring" },
+        { name: "Cycloalkane (Alicyclic)", struct: "Closed Ring (C-C)" }
+    ];
+
+    let currentMode = 'identify';
+    let priorityTargetData = {};
+    let comparisonChoiceMade = false;
+
+    function switchMode(mode) {
+        currentMode = mode;
+        document.getElementById('btn-identify').className = mode === 'identify' ? 'active' : 'secondary';
+        document.getElementById('btn-priority').className = mode === 'priority' ? 'active' : 'secondary';
+        document.getElementById('btn-hydrocarbons').className = mode === 'hydrocarbons' ? 'active' : 'secondary';
+        initGameLayout();
+    }
+
+    function shuffle(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function initGameLayout() {
+        const workspace = document.getElementById('workspace');
+        const actionBar = document.getElementById('action-bar');
+        const instructions = document.getElementById('instructions');
+        
+        workspace.innerHTML = "";
+        actionBar.innerHTML = "";
+
+        if (currentMode === 'identify') {
+            instructions.innerText = "All functional groups loaded in randomized order. Click an individual block to reveal, or click the master button.";
+            actionBar.innerHTML = `
+                <button id="reveal-all-btn" onclick="revealAllIdentities()">Reveal All Group Names</button>
+                <button class="secondary" onclick="initGameLayout()">Reshuffle Table</button>
+            `;
+
+            const grid = document.createElement('div');
+            grid.className = 'identify-grid';
+
+            let randomizedSet = shuffle(functionalGroups);
+            randomizedSet.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'group-card';
+                card.onclick = () => card.classList.toggle('revealed');
+                card.innerHTML = `
+                    <div class="structure">${item.struct}</div>
+                    <div class="meta-details">
+                        ${item.name}<br>
+                        <span style="font-size:0.75rem; color:var(--text-muted);">Priority: #${item.priority}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            workspace.appendChild(grid);
+
+        } else if (currentMode === 'hydrocarbons') {
+            instructions.innerText = "Hydrocarbon representations loaded in randomized order. Click an individual card or use the master button to reveal group names.";
+            actionBar.innerHTML = `
+                <button id="reveal-all-btn" onclick="revealAllIdentities()">Reveal All Names</button>
+                <button class="secondary" onclick="initGameLayout()">Reshuffle Table</button>
+            `;
+
+            const grid = document.createElement('div');
+            grid.className = 'identify-grid';
+
+            let randomizedHydrocarbons = shuffle(hydrocarbons);
+            randomizedHydrocarbons.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'group-card';
+                card.onclick = () => card.classList.toggle('revealed');
+                card.innerHTML = `
+                    <div class="structure" style="margin-bottom: 0px;">${item.struct}</div>
+                    <div class="meta-details" style="margin-top: 12px;">${item.name}</div>
+                `;
+                grid.appendChild(card);
+            });
+            workspace.appendChild(grid);
+
+        } else {
+            instructions.innerText = "Compare the two random groups and pick the one that holds the HIGHER IUPAC principal chain selection priority.";
+            comparisonChoiceMade = false;
+            actionBar.innerHTML = `<button id="next-priority-btn" style="display:none;" onclick="initGameLayout()">Next Comparison Pair</button>`;
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'priority-flex-container';
+
+            let idx1 = Math.floor(Math.random() * functionalGroups.length);
+            let idx2 = Math.floor(Math.random() * functionalGroups.length);
+            while (idx1 === idx2) {
+                idx2 = Math.floor(Math.random() * functionalGroups.length);
+            }
+
+            const groupA = functionalGroups[idx1];
+            const groupB = functionalGroups[idx2];
+            const correctWinner = groupA.priority < groupB.priority ? groupA : groupB;
+            
+            priorityTargetData = { winner: correctWinner, itemA: groupA, itemB: groupB };
+
+            const compLayout = document.createElement('div');
+            compLayout.className = 'comparison-layout';
+            compLayout.innerHTML = `
+                <div class="comp-card" id="card-left" onclick="evaluatePriorityPick('left')">
+                    <div class="comp-title">${groupA.name}</div>
+                    <div class="comp-struct">${groupA.struct}</div>
+                </div>
+                <div class="vs-text">VS</div>
+                <div class="comp-card" id="card-right" onclick="evaluatePriorityPick('right')">
+                    <div class="comp-title">${groupB.name}</div>
+                    <div class="comp-struct">${groupB.struct}</div>
+                </div>
+            `;
+            wrapper.appendChild(compLayout);
+
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.id = 'priority-feedback';
+            feedbackDiv.className = 'feedback';
+            wrapper.appendChild(feedbackDiv);
+
+            const infoPanel = document.createElement('div');
+            infoPanel.id = 'priority-info';
+            infoPanel.className = 'info-panel';
+            wrapper.appendChild(infoPanel);
+
+            workspace.appendChild(wrapper);
+        }
+    }
+
+    function revealAllIdentities() {
+        const cards = document.querySelectorAll('.group-card');
+        cards.forEach(card => card.classList.add('revealed'));
+    }
+
+    function evaluatePriorityPick(selectedPosition) {
+        if (comparisonChoiceMade) return;
+        comparisonChoiceMade = true;
+
+        const data = priorityTargetData;
+        const leftCard = document.getElementById('card-left');
+        const rightCard = document.getElementById('card-right');
+        const feedback = document.getElementById('priority-feedback');
+        const info = document.getElementById('priority-info');
+        
+        const selectedGroup = selectedPosition === 'left' ? data.itemA : data.itemB;
+
+        if (data.itemA.priority === data.winner.priority) {
+            leftCard.style.borderColor = "var(--success)";
+            leftCard.style.background = "rgba(35, 134, 54, 0.15)";
+        } else {
+            rightCard.style.borderColor = "var(--success)";
+            rightCard.style.background = "rgba(35, 134, 54, 0.15)";
+        }
+
+        if (selectedGroup.priority === data.winner.priority) {
+            feedback.innerText = "🎉 Correct! Accurate priority sizing.";
+            feedback.className = "feedback correct";
+        } else {
+            const wrongCard = selectedPosition === 'left' ? leftCard : rightCard;
+            wrongCard.style.borderColor = "var(--error)";
+            wrongCard.style.background = "rgba(218, 54, 51, 0.15)";
+            feedback.innerText = "❌ Incorrect priority sequence selected.";
+            feedback.className = "feedback incorrect";
+        }
+
+        info.innerHTML = `
+            <strong>NCERT Nomenclature Priority Comparison:</strong><br>
+            • 1st Ranking: <strong>${data.itemA.name}</strong> (NCERT Order Index Rank: #${data.itemA.priority})<br>
+            • 2nd Ranking: <strong>${data.itemB.name}</strong> (NCERT Order Index Rank: #${data.itemB.priority})<br><br>
+            <em>IUPAC Rule Summary:</em> ${data.winner.name} takes precedence as the principal suffix functional chain identifier group. The other acts exclusively as a substituent prefix.
+        `;
+        info.style.display = "block";
+        document.getElementById('next-priority-btn').style.display = "block";
+    }
+
+    switchMode('identify');
+</script>
+
+</body>
+</html>

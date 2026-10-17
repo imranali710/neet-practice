@@ -1,0 +1,23 @@
+[
+  { "symbol": "Sr", "name": "Strontium" },
+  { "symbol": "Ba", "name": "Barium" },
+  { "symbol": "Cs", "name": "Cesium" },
+  { "symbol": "Rb", "name": "Rubidium" },
+  { "symbol": "Sc", "name": "Scandium" },
+  { "symbol": "Hf", "name": "Hafnium" },
+  { "symbol": "W", "name": "Tungsten" },
+  { "symbol": "Co", "name": "Cobalt" },
+  { "symbol": "Cd", "name": "Cadmium" },
+  { "symbol": "Ge", "name": "Germanium" },
+  { "symbol": "Ga", "name": "Gallium" },
+  { "symbol": "In", "name": "Indium" },
+  { "symbol": "Tl", "name": "Thallium" },
+  { "symbol": "As", "name": "Arsenic" },
+  { "symbol": "Sb", "name": "Antimony" },
+  { "symbol": "Bi", "name": "Bismuth" },
+  { "symbol": "Se", "name": "Selenium" },
+  { "symbol": "Te", "name": "Tellurium" },
+  { "symbol": "Po", "name": "Polonium" },
+  { "symbol": "At", "name": "Astatine" },
+  { "symbol": "Rn", "name": "Radon" }
+]

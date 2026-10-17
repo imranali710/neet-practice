@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Element Revealer</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .status {
+      margin-bottom: 2rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    /* Grid for the 5 elements */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 2rem;
+    }
+
+    /* Individual Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 180px;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+    .symbol {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: none;
+      color: #0f172a;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-top: auto;
+      padding-top: 1rem;
+    }
+
+    /* Controls Container */
+    .controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    button:disabled {
+      background-color: #cbd5e1;
+      cursor: not-allowed;
+    }
+
+    #reveal-all-btn {
+      background-color: #475569;
+    }
+
+    #reveal-all-btn:hover:not(:disabled) {
+      background-color: #334155;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Element Flashcards</h1>
+  <div class="status" id="status-text">Loading elements...</div>
+
+  <div class="grid" id="card-container"></div>
+
+  <div class="controls">
+    <button id="reveal-all-btn" onclick="revealAllNames()">Reveal All Names</button>
+    <button id="next-btn" onclick="loadNextChunk()">Load Next 5 Elements</button>
+  </div>
+
+  <script>
+    let availableElements = [];
+
+    // Fisher-Yates shuffle algorithm
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // Load data from JSON and initialize session
+    async function initSession() {
+      const statusText = document.getElementById('status-text');
+      try {
+        const response = await fetch('elements.json');
+        if (!response.ok) {
+          throw new Error(`Failed to load elements.json (${response.status})`);
+        }
+        const data = await response.json();
+        availableElements = [...data];
+        shuffleArray(availableElements);
+        loadNextChunk();
+      } catch (err) {
+        statusText.innerText = 'Error loading element data.';
+        statusText.style.color = '#dc2626';
+        console.error(err);
+      }
+    }
+
+    // Reveal only the name of the clicked card
+    function revealCardName(cardElement) {
+      const nameDisplay = cardElement.querySelector('.name');
+      const hintDisplay = cardElement.querySelector('.hint');
+      
+      nameDisplay.style.display = 'block';
+      hintDisplay.style.display = 'none';
+    }
+
+    // Reveal all names currently visible in the grid
+    function revealAllNames() {
+      const allNames = document.querySelectorAll('.card .name');
+      const allHints = document.querySelectorAll('.card .hint');
+      
+      allNames.forEach(name => name.style.display = 'block');
+      allHints.forEach(hint => hint.style.display = 'none');
+    }
+
+    // Load up to 5 elements
+    function loadNextChunk() {
+      const container = document.getElementById('card-container');
+      const statusText = document.getElementById('status-text');
+      const nextBtn = document.getElementById('next-btn');
+      const revealAllBtn = document.getElementById('reveal-all-btn');
+      
+      container.innerHTML = '';
+
+      const chunk = availableElements.splice(0, 5);
+
+      if (chunk.length === 0) {
+        container.innerHTML = '<h3>No more elements left in this session!</h3>';
+        nextBtn.disabled = true;
+        revealAllBtn.disabled = true;
+        nextBtn.innerText = 'Session Complete';
+        statusText.innerText = 'Elements remaining: 0';
+        return;
+      }
+
+      chunk.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.setAttribute('onclick', 'revealCardName(this)');
+        card.innerHTML = `
+          <div class="symbol">${item.symbol}</div>
+          <div class="name">${item.name}</div>
+          <div class="hint">Click to reveal</div>
+        `;
+        container.appendChild(card);
+      });
+
+      statusText.innerText = `Elements remaining: ${availableElements.length}`;
+      revealAllBtn.disabled = false;
+      
+      if (availableElements.length === 0) {
+        nextBtn.disabled = true;
+        nextBtn.innerText = 'All elements shown';
+      }
+    }
+
+    window.onload = initSession;
+  </script>
+</body>
+</html>

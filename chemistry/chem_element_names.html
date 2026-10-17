@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Element Flashcards</title>
+  <style>
+    :root {
+      --bg: #f4f4f5;
+      --card-bg: #ffffff;
+      --text-main: #09090b;
+      --text-muted: #71717a;
+      --accent: #000000;
+      --border: #e4e4e7;
+    }
+
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 0.25rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+    }
+
+    .status {
+      margin-bottom: 2rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    /* Grid for the 5 elements */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      width: 100%;
+      max-width: 1100px;
+      margin-bottom: 2rem;
+    }
+
+    /* Minimalist High-Contrast Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 2px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 220px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.05);
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.9);
+    }
+
+    .symbol {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+
+    /* Hidden Details Section */
+    .details {
+      display: none;
+      width: 100%;
+      border-top: 1px dashed var(--border);
+      padding-top: 1rem;
+      margin-top: auto;
+    }
+
+    .name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .prop {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .prop span {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .ec {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      color: var(--accent);
+    }
+
+    .hint {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+      font-weight: 500;
+    }
+
+    /* Controls Container */
+    .controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      background-color: var(--accent);
+      color: white;
+      border: 2px solid var(--accent);
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: transparent;
+      color: var(--accent);
+    }
+
+    button:disabled {
+      background-color: var(--border);
+      border-color: var(--border);
+      color: #a1a1aa;
+      cursor: not-allowed;
+    }
+
+    #reveal-all-btn {
+      background-color: white;
+      color: var(--accent);
+    }
+
+    #reveal-all-btn:hover:not(:disabled) {
+      background-color: var(--bg);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Chemical Elements Master</h1>
+  <div class="status" id="status-text">Elements remaining: 0</div>
+
+  <div class="grid" id="card-container">
+    <!-- Cards will be injected here -->
+  </div>
+
+  <div class="controls">
+    <button id="reveal-all-btn" onclick="revealAllNames()">Reveal All</button>
+    <button id="next-btn" onclick="loadNextChunk()">Load Next 5</button>
+  </div>
+
+  <script>
+    // Fully enriched array with Z (Atomic Number), G (Group), P (Period), and EC (Electronic Config)
+    // Lanthanides & Actinides are assigned Group 3 as per standard IUPAC format.
+    const originalElements = [
+        { s: "H", n: "Hydrogen", z: 1, g: 1, p: 1, ec: "1s¹" },
+        { s: "He", n: "Helium", z: 2, g: 18, p: 1, ec: "1s²" },
+        { s: "Li", n: "Lithium", z: 3, g: 1, p: 2, ec: "[He] 2s¹" },
+        { s: "Be", n: "Beryllium", z: 4, g: 2, p: 2, ec: "[He] 2s²" },
+        { s: "B", n: "Boron", z: 5, g: 13, p: 2, ec: "[He] 2s² 2p¹" },
+        { s: "C", n: "Carbon", z: 6, g: 14, p: 2, ec: "[He] 2s² 2p²" },
+        { s: "N", n: "Nitrogen", z: 7, g: 15, p: 2, ec: "[He] 2s² 2p³" },
+        { s: "O", n: "Oxygen", z: 8, g: 16, p: 2, ec: "[He] 2s² 2p⁴" },
+        { s: "F", n: "Fluorine", z: 9, g: 17, p: 2, ec: "[He] 2s² 2p⁵" },
+        { s: "Ne", n: "Neon", z: 10, g: 18, p: 2, ec: "[He] 2s² 2p⁶" },
+        { s: "Na", n: "Sodium", z: 11, g: 1, p: 3, ec: "[Ne] 3s¹" },
+        { s: "Mg", n: "Magnesium", z: 12, g: 2, p: 3, ec: "[Ne] 3s²" },
+        { s: "Al", n: "Aluminium", z: 13, g: 13, p: 3, ec: "[Ne] 3s² 3p¹" },
+        { s: "Si", n: "Silicon", z: 14, g: 14, p: 3, ec: "[Ne] 3s² 3p²" },
+        { s: "P", n: "Phosphorus", z: 15, g: 15, p: 3, ec: "[Ne] 3s² 3p³" },
+        { s: "S", n: "Sulfur", z: 16, g: 16, p: 3, ec: "[Ne] 3s² 3p⁴" },
+        { s: "Cl", n: "Chlorine", z: 17, g: 17, p: 3, ec: "[Ne] 3s² 3p⁵" },
+        { s: "Ar", n: "Argon", z: 18, g: 18, p: 3, ec: "[Ne] 3s² 3p⁶" },
+        { s: "K", n: "Potassium", z: 19, g: 1, p: 4, ec: "[Ar] 4s¹" },
+        { s: "Ca", n: "Calcium", z: 20, g: 2, p: 4, ec: "[Ar] 4s²" },
+        { s: "Sc", n: "Scandium", z: 21, g: 3, p: 4, ec: "[Ar] 3d¹ 4s²" },
+        { s: "Ti", n: "Titanium", z: 22, g: 4, p: 4, ec: "[Ar] 3d² 4s²" },
+        { s: "V", n: "Vanadium", z: 23, g: 5, p: 4, ec: "[Ar] 3d³ 4s²" },
+        { s: "Cr", n: "Chromium", z: 24, g: 6, p: 4, ec: "[Ar] 3d⁵ 4s¹" }, // Exception
+        { s: "Mn", n: "Manganese", z: 25, g: 7, p: 4, ec: "[Ar] 3d⁵ 4s²" },
+        { s: "Fe", n: "Iron", z: 26, g: 8, p: 4, ec: "[Ar] 3d⁶ 4s²" },
+        { s: "Co", n: "Cobalt", z: 27, g: 9, p: 4, ec: "[Ar] 3d⁷ 4s²" },
+        { s: "Ni", n: "Nickel", z: 28, g: 10, p: 4, ec: "[Ar] 3d⁸ 4s²" },
+        { s: "Cu", n: "Copper", z: 29, g: 11, p: 4, ec: "[Ar] 3d¹⁰ 4s¹" }, // Exception
+        { s: "Zn", n: "Zinc", z: 30, g: 12, p: 4, ec: "[Ar] 3d¹⁰ 4s²" },
+        { s: "Ga", n: "Gallium", z: 31, g: 13, p: 4, ec: "[Ar] 3d¹⁰ 4s² 4p¹" },
+        { s: "Ge", n: "Germanium", z: 32, g: 14, p: 4, ec: "[Ar] 3d¹⁰ 4s² 4p²" },
+        { s: "As", n: "Arsenic", z: 33, g: 15, p: 4, ec: "[Ar] 3d¹⁰ 4s² 4p³" },
+        { s: "Se", n: "Selenium", z: 34, g: 16, p: 4, ec: "[Ar] 3d¹⁰ 4s² 4p⁴" },
+        { s: "Br", n: "Bromine", z: 35, g: 17, p: 4, ec: "[Ar] 3d¹⁰ 4s² 4p⁵" },
+        { s: "Kr", n: "Krypton", z: 36, g: 18, p: 4, ec: "[Ar] 3d¹⁰ 4s² 4p⁶" },
+        { s: "Rb", n: "Rubidium", z: 37, g: 1, p: 5, ec: "[Kr] 5s¹" },
+        { s: "Sr", n: "Strontium", z: 38, g: 2, p: 5, ec: "[Kr] 5s²" },
+        { s: "Zr", n: "Zirconium", z: 40, g: 4, p: 5, ec: "[Kr] 4d² 5s²" },
+        { s: "Nb", n: "Niobium", z: 41, g: 5, p: 5, ec: "[Kr] 4d⁴ 5s¹" }, // Exception
+        { s: "Mo", n: "Molybdenum", z: 42, g: 6, p: 5, ec: "[Kr] 4d⁵ 5s¹" }, // Exception
+        { s: "Pd", n: "Palladium", z: 46, g: 10, p: 5, ec: "[Kr] 4d¹⁰" }, // Exception
+        { s: "Ag", n: "Silver", z: 47, g: 11, p: 5, ec: "[Kr] 4d¹⁰ 5s¹" }, // Exception
+        { s: "Cd", n: "Cadmium", z: 48, g: 12, p: 5, ec: "[Kr] 4d¹⁰ 5s²" },
+        { s: "In", n: "Indium", z: 49, g: 13, p: 5, ec: "[Kr] 4d¹⁰ 5s² 5p¹" },
+        { s: "Sn", n: "Tin", z: 50, g: 14, p: 5, ec: "[Kr] 4d¹⁰ 5s² 5p²" },
+        { s: "Sb", n: "Antimony", z: 51, g: 15, p: 5, ec: "[Kr] 4d¹⁰ 5s² 5p³" },
+        { s: "Te", n: "Tellurium", z: 52, g: 16, p: 5, ec: "[Kr] 4d¹⁰ 5s² 5p⁴" },
+        { s: "I", n: "Iodine", z: 53, g: 17, p: 5, ec: "[Kr] 4d¹⁰ 5s² 5p⁵" },
+        { s: "Xe", n: "Xenon", z: 54, g: 18, p: 5, ec: "[Kr] 4d¹⁰ 5s² 5p⁶" },
+        { s: "Cs", n: "Cesium", z: 55, g: 1, p: 6, ec: "[Xe] 6s¹" },
+        { s: "Ba", n: "Barium", z: 56, g: 2, p: 6, ec: "[Xe] 6s²" },
+        { s: "La", n: "Lanthanum", z: 57, g: 3, p: 6, ec: "[Xe] 5d¹ 6s²" }, // Exception
+        { s: "Ce", n: "Cerium", z: 58, g: 3, p: 6, ec: "[Xe] 4f¹ 5d¹ 6s²" }, // Exception
+        { s: "Gd", n: "Gadolinium", z: 64, g: 3, p: 6, ec: "[Xe] 4f⁷ 5d¹ 6s²" }, // Exception
+        { s: "Lu", n: "Lutetium", z: 71, g: 3, p: 6, ec: "[Xe] 4f¹⁴ 5d¹ 6s²" },
+        { s: "Hf", n: "Hafnium", z: 72, g: 4, p: 6, ec: "[Xe] 4f¹⁴ 5d² 6s²" },
+        { s: "W", n: "Tungsten", z: 74, g: 6, p: 6, ec: "[Xe] 4f¹⁴ 5d⁴ 6s²" },
+        { s: "Pt", n: "Platinum", z: 78, g: 10, p: 6, ec: "[Xe] 4f¹⁴ 5d⁹ 6s¹" }, // Exception
+        { s: "Au", n: "Gold", z: 79, g: 11, p: 6, ec: "[Xe] 4f¹⁴ 5d¹⁰ 6s¹" }, // Exception
+        { s: "Hg", n: "Mercury", z: 80, g: 12, p: 6, ec: "[Xe] 4f¹⁴ 5d¹⁰ 6s²" },
+        { s: "Tl", n: "Thallium", z: 81, g: 13, p: 6, ec: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹" },
+        { s: "Pb", n: "Lead", z: 82, g: 14, p: 6, ec: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²" },
+        { s: "Bi", n: "Bismuth", z: 83, g: 15, p: 6, ec: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³" },
+        { s: "Ac", n: "Actinium", z: 89, g: 3, p: 7, ec: "[Rn] 6d¹ 7s²" }, // Exception
+        { s: "Th", n: "Thorium", z: 90, g: 3, p: 7, ec: "[Rn] 6d² 7s²" }, // Exception
+        { s: "Cm", n: "Curium", z: 96, g: 3, p: 7, ec: "[Rn] 5f⁷ 6d¹ 7s²" }, // Exception
+        { s: "Lr", n: "Lawrencium", z: 103, g: 3, p: 7, ec: "[Rn] 5f¹⁴ 7s² 7p¹" }
+    ];
+
+    let availableElements = [];
+
+    // Fisher-Yates shuffle
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // Initialize the session
+    function initSession() {
+      availableElements = [...originalElements];
+      shuffleArray(availableElements);
+      loadNextChunk();
+    }
+
+    // Reveal the hidden details of the clicked card
+    function revealCardDetails(cardElement) {
+      const detailsBox = cardElement.querySelector('.details');
+      const hintText = cardElement.querySelector('.hint');
+      
+      detailsBox.style.display = 'block';
+      if (hintText) hintText.style.display = 'none';
+      
+      // Keep card open/expanded styling
+      cardElement.style.borderColor = "var(--accent)";
+    }
+
+    // Reveal all details currently visible in the grid
+    function revealAllNames() {
+      const allDetails = document.querySelectorAll('.card .details');
+      const allHints = document.querySelectorAll('.card .hint');
+      const allCards = document.querySelectorAll('.card');
+      
+      allDetails.forEach(detail => detail.style.display = 'block');
+      allHints.forEach(hint => hint.style.display = 'none');
+      allCards.forEach(card => card.style.borderColor = "var(--accent)");
+    }
+
+    // Load up to 5 elements
+    function loadNextChunk() {
+      const container = document.getElementById('card-container');
+      const statusText = document.getElementById('status-text');
+      const nextBtn = document.getElementById('next-btn');
+      const revealAllBtn = document.getElementById('reveal-all-btn');
+      
+      // Clear current view
+      container.innerHTML = '';
+
+      const chunk = availableElements.splice(0, 5);
+
+      if (chunk.length === 0) {
+        container.innerHTML = '<h2>Session Complete! All elements reviewed.</h2>';
+        nextBtn.disabled = true;
+        revealAllBtn.disabled = true;
+        nextBtn.innerText = 'Finished';
+        statusText.innerText = `Elements remaining: 0`;
+        return;
+      }
+
+      // Render the new chunk
+      chunk.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.setAttribute('onclick', 'revealCardDetails(this)');
+        card.innerHTML = `
+          <div class="symbol">${item.s}</div>
+          <div class="hint">Click to reveal</div>
+          
+          <div class="details">
+            <div class="name">${item.n}</div>
+            <div class="prop">Z = <span>${item.z}</span></div>
+            <div class="prop">Group: <span>${item.g}</span> | Period: <span>${item.p}</span></div>
+            <div class="ec"><b>${item.ec}</b></div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      // Update UI counts
+      statusText.innerText = `Elements remaining: ${availableElements.length}`;
+      revealAllBtn.disabled = false; 
+      
+      if (availableElements.length === 0) {
+        nextBtn.disabled = true;
+        nextBtn.innerText = 'All shown';
+      }
+    }
+
+    // Start
+    window.onload = initSession;
+  </script>
+</body>
+</html>
