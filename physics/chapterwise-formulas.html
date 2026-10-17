@@ -25,28 +25,30 @@
 
   <style>
     :root {
-      --bg: #0b0f19;
-      --card-bg: #151d2f;
-      --card-hover: #1c263d;
-      --border: #23314d;
-      --text-main: #f1f5f9;
-      --text-muted: #94a3b8;
-      --accent: #10b981;
-      --accent-hover: #059669;
-      --accent-light: rgba(16, 185, 129, 0.15);
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-hover-border: #16a34a;
+      --formula-bg: #f1f5f9;
+      --border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent: #16a34a;
+      --accent-hover: #15803d;
+      --accent-light: #ecfdf5;
+      --accent-text: #065f46;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
       background-color: var(--bg);
       color: var(--text-main);
-      padding: 1.5rem 1rem 3rem;
+      padding: 2rem 1rem 3rem;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -59,7 +61,7 @@
     }
 
     header {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
       text-align: center;
     }
 
@@ -70,16 +72,19 @@
       color: var(--accent);
       text-decoration: none;
       font-weight: 600;
+      transition: color 0.15s ease;
     }
 
     .back-nav:hover {
       text-decoration: underline;
+      color: var(--accent-hover);
     }
 
     h1 {
       font-size: 1.75rem;
       font-weight: 700;
-      color: #ffffff;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
       margin-bottom: 0.35rem;
     }
 
@@ -98,15 +103,16 @@
     }
 
     .tab-btn {
-      background: #111726;
+      background: #ffffff;
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 0.45rem 0.9rem;
-      border-radius: 20px;
+      padding: 0.45rem 0.95rem;
+      border-radius: 9999px;
       font-size: 0.85rem;
       cursor: pointer;
       font-weight: 500;
       transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
 
     .tab-btn:hover {
@@ -117,13 +123,13 @@
     .tab-btn.active {
       background: var(--accent-light);
       border-color: var(--accent);
-      color: #34d399;
+      color: var(--accent-text);
       font-weight: 600;
     }
 
     /* Chapter Section */
     .chapter-block {
-      margin-bottom: 2rem;
+      margin-bottom: 2.25rem;
     }
 
     .chapter-header {
@@ -136,9 +142,9 @@
     }
 
     .chapter-title {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 700;
-      color: #ffffff;
+      color: var(--text-main);
       display: flex;
       align-items: center;
       gap: 0.6rem;
@@ -146,15 +152,16 @@
 
     .count-pill {
       font-size: 0.75rem;
-      padding: 0.15rem 0.5rem;
+      padding: 0.15rem 0.55rem;
       background: var(--accent-light);
-      color: #34d399;
-      border-radius: 12px;
+      color: var(--accent-text);
+      border-radius: 9999px;
       font-weight: 600;
+      border: 1px solid rgba(22, 163, 74, 0.2);
     }
 
     .toggle-chapter-btn {
-      background: #1e293b;
+      background: #ffffff;
       border: 1px solid var(--border);
       color: var(--text-muted);
       font-size: 0.8rem;
@@ -163,11 +170,13 @@
       cursor: pointer;
       font-weight: 600;
       transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
 
     .toggle-chapter-btn:hover {
       border-color: var(--accent);
-      color: var(--text-main);
+      color: var(--accent-text);
+      background: var(--accent-light);
     }
 
     /* Card Layout */
@@ -184,16 +193,18 @@
       overflow: hidden;
       cursor: pointer;
       user-select: none;
-      transition: border-color 0.15s ease, background 0.15s ease;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
     }
 
     .card:hover {
-      border-color: var(--accent);
-      background: var(--card-hover);
+      border-color: var(--card-hover-border);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     }
 
     .card-header {
-      padding: 0.9rem 1.15rem;
+      padding: 0.95rem 1.2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -201,13 +212,13 @@
     }
 
     .card-title {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 600;
       color: var(--text-main);
     }
 
     .chevron {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       transition: transform 0.2s ease, color 0.2s ease;
     }
@@ -219,9 +230,9 @@
 
     .card-body {
       display: none;
-      padding: 1rem 1.15rem;
-      border-top: 1px dashed var(--border);
-      background: #0f1624;
+      padding: 1.1rem 1.2rem;
+      border-top: 1px solid var(--border);
+      background: var(--formula-bg);
     }
 
     .card.revealed .card-body {
@@ -229,17 +240,19 @@
     }
 
     .formula-display {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       overflow-x: auto;
       padding: 0.4rem 0;
-      color: #f1f5f9;
+      color: #0f172a;
     }
 
     .notes {
-      margin-top: 0.5rem;
+      margin-top: 0.6rem;
       font-size: 0.85rem;
       color: var(--text-muted);
       line-height: 1.45;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 0.5rem;
     }
 
     /* Loading / Errors */
@@ -250,9 +263,9 @@
     }
 
     .error-box {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid #ef4444;
-      color: #fca5a5;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
       padding: 1rem;
       border-radius: 8px;
       margin-bottom: 1.5rem;
