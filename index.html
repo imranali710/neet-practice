@@ -5,37 +5,208 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NEET Practice Hub</title>
   <style>
-    body { font-family: system-ui, sans-serif; padding: 2rem; background: #f8fafc; color: #1e293b; max-width: 600px; margin: 0 auto; }
-    h1 { font-size: 1.5rem; margin-bottom: 1.5rem; }
-    .physics-card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; text-decoration: none; color: inherit; display: block; transition: transform 0.15s; }
-    .physics-card:hover { transform: translateY(-2px); border-color: #2563eb; }
-    .chemistry-card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; text-decoration: none; color: inherit; display: block; transition: transform 0.15s; }
-    .chemistry-card:hover { transform: translateY(-2px); border-color: #2563eb; }
-    .chemsitry-title { font-weight: 600; color: #2563eb; }
-    .physics-title { font-weight: 600; color: #2ceb25; }
-    .desc { font-size: 0.85rem; color: #64748b; margin-top: 0.25rem; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 2.5rem 1.5rem;
+      background: #f8fafc;
+      color: #1e293b;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    header {
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .subheading {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-top: 0.25rem;
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: #94a3b8;
+      margin: 1.75rem 0 0.75rem;
+      display: block;
+    }
+
+    .category-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+      margin: 1.1rem 0 0.4rem;
+      display: block;
+    }
+
+    /* Grid for Subject Hubs */
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hub-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .hub-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .hub-physics:hover { border-color: #16a34a; }
+    .hub-chemistry:hover { border-color: #2563eb; }
+    .hub-biology:hover { border-color: #9333ea; }
+
+    .hub-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hub-physics .hub-tag { color: #16a34a; }
+    .hub-chemistry .hub-tag { color: #2563eb; }
+    .hub-biology .hub-tag { color: #9333ea; }
+
+    .hub-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .hub-desc {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    /* Flashcard Links */
+    .card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .physics-card, .chemistry-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all 0.15s ease;
+    }
+
+    .physics-card:hover {
+      transform: translateY(-2px);
+      border-color: #16a34a;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+    }
+
+    .chemistry-card:hover {
+      transform: translateY(-2px);
+      border-color: #2563eb;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+    }
+
+    .physics-title {
+      font-weight: 600;
+      color: #16a34a;
+    }
+
+    .chemistry-title {
+      font-weight: 600;
+      color: #2563eb;
+    }
+
+    .desc {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 0.2rem;
+    }
   </style>
 </head>
 <body>
-  <h1>NEET Practice Modules</h1>
-  <label>Physics</label>
-  <a class="physics-card" href="physics/random-formulas.html">
-    <div class="physics-title"> Random Physics Formulas - Flashcards</div>
-    <div class="desc">Randomised formulas revealer and memory practice</div>
-  </a>
-  
-  <label>Chemistry</label>
-  <a class="chemistry-card" href="chemistry/chem_element_names.html">
-    <div class="chemistry-title">Chemistry — Element Flashcards</div>
-    <div class="desc">Randomised element revealer and memory practice</div>
-  </a>
-  <a class="chemistry-card" href="chemistry/chem_functional_group.html">
-    <div class="chemistry-title">Chemistry — Functional Groups Flashcards</div>
-    <div class="desc">Randomised functional revealer and memory practice</div>
-  </a>
-  <a class="chemistry-card" href="chemistry/uncomfortable.html">
-    <div class="chemistry-title">Chemistry — Uncomfortable Element Flashcards</div>
-    <div class="desc">Randomised element revealer and memory </div>
-  </a>
+
+  <header>
+    <h1>NEET Practice Hub</h1>
+    <div class="subheading">Active recall, subject repositories, and flashcard drills</div>
+  </header>
+
+  <!-- SECTION 1: Subject Index Hubs -->
+  <span class="section-title">Subject Index Hubs</span>
+  <div class="hub-grid">
+    <a class="hub-card hub-physics" href="physics/index.html">
+      <span class="hub-tag">Physics</span>
+      <div class="hub-title">Physics Index</div>
+      <div class="hub-desc">Formula sheets, chapter notes & modules</div>
+    </a>
+
+    <a class="hub-card hub-chemistry" href="chemistry/index.html">
+      <span class="hub-tag">Chemistry</span>
+      <div class="hub-title">Chemistry Index</div>
+      <div class="hub-desc">Inorganic, organic & physical modules</div>
+    </a>
+
+    <a class="hub-card hub-biology" href="biology/index.html">
+      <span class="hub-tag">Biology</span>
+      <div class="hub-title">Biology Index</div>
+      <div class="hub-desc">Botany & zoology memory maps</div>
+    </a>
+  </div>
+
+  <!-- SECTION 2: Quick Access Flashcards -->
+  <span class="section-title">Quick Access (Flashcard Modules)</span>
+
+  <span class="category-label">Physics</span>
+  <div class="card-list">
+    <a class="physics-card" href="physics/random-formulas.html">
+      <div class="physics-title">Random Physics Formulas — Flashcards</div>
+      <div class="desc">Randomised formulas revealer and memory practice</div>
+    </a>
+  </div>
+
+  <span class="category-label">Chemistry</span>
+  <div class="card-list">
+    <a class="chemistry-card" href="chemistry/chem_element_names.html">
+      <div class="chemistry-title">Chemistry — Element Flashcards</div>
+      <div class="desc">Randomised element revealer and memory practice</div>
+    </a>
+
+    <a class="chemistry-card" href="chemistry/chem_functional_group.html">
+      <div class="chemistry-title">Chemistry — Functional Groups Flashcards</div>
+      <div class="desc">Randomised functional revealer and memory practice</div>
+    </a>
+
+    <a class="chemistry-card" href="chemistry/uncomfortable.html">
+      <div class="chemistry-title">Chemistry — Uncomfortable Element Flashcards</div>
+      <div class="desc">Randomised element revealer and memory</div>
+    </a>
+  </div>
+
 </body>
 </html>
