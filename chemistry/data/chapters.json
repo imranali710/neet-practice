@@ -1,0 +1,56 @@
+[
+  {
+    "id": "chem-01",
+    "title": "Some Basic Concepts of Chemistry",
+    "category": "Physical",
+    "class": "11",
+    "desc": "Mole concept, stoichiometric ratios, and concentration units.",
+    "link": "chapters/some-basic-concepts/index.html",
+    "quickAccess": true
+  },
+  {
+    "id": "chem-02",
+    "title": "Structure of Atom",
+    "category": "Physical",
+    "class": "11",
+    "desc": "Quantum numbers, Bohr's model, and electronic configurations.",
+    "link": "chapters/structure-of-atom/index.html",
+    "quickAccess": false
+  },
+  {
+    "id": "chem-03",
+    "title": "Chemical Thermodynamics",
+    "category": "Physical",
+    "class": "11",
+    "desc": "First and second laws, enthalpy, entropy, and Gibbs free energy.",
+    "link": "chapters/chemical-thermodynamics/index.html",
+    "quickAccess": true
+  },
+  {
+    "id": "chem-09",
+    "title": "Periodic Table & Periodicity",
+    "category": "Inorganic",
+    "class": "11",
+    "desc": "Ionization energy, electron affinity, and atomic radius trends.",
+    "link": "chapters/classification-of-elements/index.html",
+    "quickAccess": true
+  },
+  {
+    "id": "chem-14",
+    "title": "Organic Chemistry - GOC",
+    "category": "Organic",
+    "class": "11",
+    "desc": "Inductive and resonance effects, carbocations, and isomerism.",
+    "link": "chapters/organic-chemistry-basics/index.html",
+    "quickAccess": true
+  },
+  {
+    "id": "chem-10",
+    "title": "Chemical Bonding",
+    "category": "Inorganic",
+    "class": "11",
+    "desc": "VSEPR theory, hybridization, dipole moment, and MOT diagrams.",
+    "link": "chapters/chemical-bonding/index.html",
+    "quickAccess": false
+  }
+]
