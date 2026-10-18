@@ -1,0 +1,80 @@
+[
+    {
+        "chapter": "Gravitation",
+        "title": "Velocity, Time Period & Energy of Satellites",
+        "formula": "$$v_o = \\sqrt{\\frac{GM}{r}}, \\quad T = 2\\pi\\sqrt{\\frac{r^3}{GM}}, \\quad E_{tot} = -\\frac{GMm}{2r} = -K = \\frac{U}{2}$$",
+        "notes": "Where $r = R + h$. Total mechanical energy is negative (bound system)."
+    },
+    {
+        "chapter": "Moving Charges & Magnetism",
+        "title": "Field on Axis of Circular Loop (Element)",
+        "formula": "$$dB = \\frac{\\mu_0 I d\\ell}{4\\pi (R^2 + x^2)}, \\quad dB_x = dB\\sin\\phi = dB\\left(\\frac{R}{\\sqrt{R^2+x^2}}\\right)$$",
+        "notes": "Components perpendicular to axis cancel out by symmetry; axial components sum up."
+    },
+    {
+        "chapter": "Moving Charges & Magnetism",
+        "title": "Field on Axis & Center of Circular Loop",
+        "formula": "$$B_{\\text{axis}} = \\frac{\\mu_0 N I R^2}{2(R^2 + x^2)^{3/2}}, \\quad B_{\\text{center}} = \\frac{\\mu_0 N I}{2R} \\quad [x = 0]$$",
+        "notes": "For points very far on axis ($x \\gg R$): $B \\approx \\frac{\\mu_0 (N I \\pi R^2)}{2\\pi x^3} = \\frac{\\mu_0 M}{2\\pi x^3}$."
+    },
+    {
+        "chapter": "Moving Charges & Magnetism",
+        "title": "Ampere's Circuital Law",
+        "formula": "$$\\oint \\vec{B} \\cdot d\\vec{\\ell} = \\mu_0 I_{\\text{enclosed}}$$",
+        "notes": "Holds for any closed Amperian loop with steady currents."
+    },
+    {
+        "chapter": "Moving Charges & Magnetism",
+        "title": "Magnetic Field inside an Ideal Solenoid",
+        "formula": "$$B = \\mu_0 n I = \\mu_0 \\left(\\frac{N}{L}\\right) I$$",
+        "notes": "Near ends of finite solenoid: $B_{\\text{end}} \\approx \\frac{1}{2}\\mu_0 n I$."
+    },
+    {
+        "chapter": "Moving Charges & Magnetism",
+        "title": "Force Between Two Parallel Current Wires",
+        "formula": "$$\\frac{F}{L} = \\frac{\\mu_0 I_1 I_2}{2\\pi d}$$",
+        "notes": "Parallel currents attract; anti-parallel currents repel."
+    },
+    {
+        "chapter": "Moving Charges & Magnetism",
+        "title": "Torque on Rectangular Loop & Magnetic Dipole",
+        "formula": "$$\\vec{\\tau} = \\vec{M} \\times \\vec{B}, \\quad \\tau = NIAB\\sin\\theta, \\quad \\vec{M} = NI\\vec{A}$$",
+        "notes": "$\\,\\theta$ is angle between magnetic moment $\\vec{M}$ (area vector) and field $\\vec{B}$."
+    },
+    {
+        "chapter": "Moving Charges & Magnetism",
+        "title": "Moving Coil Galvanometer",
+        "formula": "$$I = \\left(\\frac{k}{NAB}\\right) \\theta = G\\theta, \\quad S_i = \\frac{\\theta}{I} = \\frac{NAB}{k}, \\quad S_v = \\frac{\\theta}{V} = \\frac{NAB}{k R_g}$$",
+        "notes": "Radial magnetic field keeps $\\theta = 90^\\circ$ between area and field vectors."
+    },
+    {
+        "chapter": "Alternating Current",
+        "title": "AC: Pure Capacitive Circuit & Reactance",
+        "formula": "$$i = I_m \\sin\\left(\\omega t + \\frac{\\pi}{2}\\right), \\quad X_C = \\frac{1}{\\omega C} = \\frac{1}{2\\pi f C}$$",
+        "notes": "Current leads voltage by $90^\\circ$ ($\\pi/2$). For DC ($f=0$), $X_C = \\infty$ (blocks DC)."
+    },
+    {
+        "chapter": "Alternating Current",
+        "title": "AC: Pure Inductive Circuit & Reactance",
+        "formula": "$$i = I_m \\sin\\left(\\omega t - \\frac{\\pi}{2}\\right), \\quad X_L = \\omega L = 2\\pi f L$$",
+        "notes": "Current lags voltage by $90^\\circ$ ($\\pi/2$). For DC ($f=0$), $X_L = 0$."
+    },
+    {
+        "chapter": "Alternating Current",
+        "title": "AC: Series LCR Circuit, Impedance & Resonance",
+        "formula": "$$Z = \\sqrt{R^2 + (X_L - X_C)^2}, \\quad \\tan\\phi = \\frac{X_L - X_C}{R}, \\quad f_0 = \\frac{1}{2\\pi\\sqrt{LC}}$$",
+        "notes": "At resonance: $X_L = X_C$, $Z_{\\min} = R$, current is maximum and in phase."
+    },
+    {
+        "chapter": "Alternating Current",
+        "title": "AC: Power in General Circuit & Power Factor",
+        "formula": "$$P_{\\text{avg}} = V_{\\text{rms}} I_{\\text{rms}} \\cos\\phi, \\quad \\cos\\phi = \\frac{R}{Z}$$",
+        "notes": "$\\cos\\phi$ is the power factor. In pure L or C, $\\phi = 90^\\circ \\implies P = 0$ (wattless current)."
+    },
+    {
+        "chapter": "Alternating Current",
+        "title": "AC: Transformer",
+        "formula": "$$\\frac{V_s}{V_p} = \\frac{N_s}{N_p} = \\frac{I_p}{I_s} = k, \\quad \\eta = \\frac{P_{\\text{out}}}{P_{\\text{in}}} \\times 100\\%$$",
+        "notes": "For step-up transformer $k > 1$ ($V_s > V_p, I_s < I_p$); for step-down $k < 1$."
+    }
+]
