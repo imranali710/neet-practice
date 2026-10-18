@@ -1,40 +1,193 @@
 :root {
-  --bg: #0f172a;
-  --card-bg: #1e293b;
-  --card-border: #334155;
-  --text: #f8fafc;
-  --text-muted: #94a3b8;
-  
-  /* Subject Accent Colors */
-  --physics-accent: #818cf8;    /* Indigo */
-  --chem-accent: #38bdf8;       /* Sky Blue */
-  --bio-accent: #34d399;        /* Emerald Green */
-  
-  --accent: var(--chem-accent); /* Default fallback */
+  /* Light Theme Base Colors */
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text-muted: #64748b;
+
+  /* NEET Subject Colors (High-contrast for white backgrounds) */
+  --physics-accent: #4f46e5;   /* Indigo */
+  --physics-bg: #eef2ff;
+  --chem-accent: #0284c7;      /* Ocean Blue */
+  --chem-bg: #e0f2fe;
+  --bio-accent: #059669;       /* Forest Green */
+  --bio-bg: #ecfdf5;
+
+  /* State Colors */
+  --correct-bg: #dcfce7;
+  --correct-text: #15803d;
+  --wrong-bg: #fee2e2;
+  --wrong-text: #b91c1c;
+
+  --accent: var(--chem-accent);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-body { background: var(--bg); color: var(--text); padding: 2rem 1rem; max-width: 900px; margin: 0 auto; line-height: 1.6; }
+/* Reset & Mobile Viewport setup */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 
-/* Injected Navigation */
-.top-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--card-border); padding-bottom: 0.75rem; }
-.top-nav a { color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
-.header-area { margin-bottom: 2rem; }
-.header-area h1 { font-size: 1.8rem; margin-bottom: 0.35rem; }
-.header-area p { color: var(--text-muted); font-size: 0.95rem; }
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  padding: 1rem 0.75rem;
+  max-width: 680px; /* Constrained for thumb-friendly reading on tablets & phones */
+  margin: 0 auto;
+  line-height: 1.5;
+  font-size: 16px; /* Prevents auto-zoom on mobile inputs */
+}
 
-/* Cards & Layout */
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem; }
-.card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 1.25rem; text-decoration: none; color: inherit; display: block; transition: border-color 0.2s, transform 0.15s; }
-.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+/* Smartphone-Optimized Navigation Bar */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
 
-/* Badges */
-.badge { display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 5px; }
-.badge.physics { background: rgba(129, 140, 248, 0.15); color: var(--physics-accent); }
-.badge.chemistry { background: rgba(56, 189, 248, 0.15); color: var(--chem-accent); }
-.badge.biology { background: rgba(52, 211, 153, 0.15); color: var(--bio-accent); }
+.top-nav a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* Apple/Google recommended touch size */
+}
 
-/* Subject Theme Adapters */
+.header-area {
+  margin-bottom: 1.5rem;
+}
+
+.header-area h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.header-area p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Card Lists & Touch Targets */
+.card-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.15rem;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.1s ease, border-color 0.15s ease;
+  user-select: none;
+}
+
+.card:active {
+  transform: scale(0.985); /* Mobile tap feedback */
+  border-color: var(--accent);
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 0.35rem;
+  line-height: 1.35;
+}
+
+.card p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* Subject Badges */
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+}
+
+.badge.physics { background: var(--physics-bg); color: var(--physics-accent); }
+.badge.chemistry { background: var(--chem-bg); color: var(--chem-accent); }
+.badge.biology { background: var(--bio-bg); color: var(--bio-accent); }
+
+/* Interactive Flashcards (Tap-to-Reveal) */
+.flashcard {
+  cursor: pointer;
+}
+
+.flashcard .front {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.flashcard .answer-box {
+  display: none;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--border);
+  color: #1e293b;
+  font-size: 0.925rem;
+  line-height: 1.45;
+}
+
+.flashcard.open .answer-box {
+  display: block;
+}
+
+/* Touch-Friendly Quiz Buttons */
+.quiz-option {
+  width: 100%;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  margin: 0.5rem 0;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.95rem;
+  cursor: pointer;
+  min-height: 48px;
+}
+
+.quiz-option:active {
+  background-color: #f1f5f9;
+}
+
+.quiz-option.correct {
+  background: var(--correct-bg);
+  border-color: var(--correct-text);
+  color: var(--correct-text);
+  font-weight: 600;
+}
+
+.quiz-option.wrong {
+  background: var(--wrong-bg);
+  border-color: var(--wrong-text);
+  color: var(--wrong-text);
+}
+
+/* Subject Theme Switchers */
 body[data-subject="physics"] { --accent: var(--physics-accent); }
 body[data-subject="chemistry"] { --accent: var(--chem-accent); }
 body[data-subject="biology"] { --accent: var(--bio-accent); }
