@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEET Chemistry Chapters</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --physical: #38bdf8;
+      --inorganic: #fbbf24;
+      --organic: #34d399;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background-color: var(--card-bg);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid var(--card-border);
+      background-color: var(--card-bg);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.875rem;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background-color: var(--accent);
+      color: #0f172a;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .chapter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
+
+    .badges {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .badge.physical {
+      background-color: rgba(56, 189, 248, 0.15);
+      color: var(--physical);
+    }
+
+    .badge.inorganic {
+      background-color: rgba(251, 191, 36, 0.15);
+      color: var(--inorganic);
+    }
+
+    .badge.organic {
+      background-color: rgba(52, 211, 153, 0.15);
+      color: var(--organic);
+    }
+
+    .badge.class-tag {
+      background-color: rgba(148, 163, 184, 0.15);
+      color: var(--text-muted);
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      line-height: 1.4;
+      margin-bottom: 1rem;
+    }
+
+    .card-footer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .action-link {
+      color: var(--accent);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>NEET Chemistry Chapters</h1>
+    <p class="subtitle">Select a topic to start practicing formulas and concepts</p>
+  </header>
+
+  <section class="controls">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search chapters...">
+    <div class="filter-tabs">
+      <button class="tab-btn active" data-filter="all">All</button>
+      <button class="tab-btn" data-filter="Physical">Physical</button>
+      <button class="tab-btn" data-filter="Inorganic">Inorganic</button>
+      <button class="tab-btn" data-filter="Organic">Organic</button>
+      <button class="tab-btn" data-filter="11">Class 11</button>
+      <button class="tab-btn" data-filter="12">Class 12</button>
+    </div>
+  </section>
+
+  <main id="chapterGrid" class="chapter-grid"></main>
+
+  <script>
+    const chapters = [
+      { id: 1, title: "Some Basic Concepts of Chemistry", type: "Physical", class: "11", link: "../chemistry/chem_element_names.html" },
+      { id: 2, title: "Structure of Atom", type: "Physical", class: "11", link: "#" },
+      { id: 3, title: "Chemical Thermodynamics", type: "Physical", class: "11", link: "#" },
+      { id: 4, title: "Equilibrium", type: "Physical", class: "11", link: "#" },
+      { id: 5, title: "Redox Reactions", type: "Physical", class: "11", link: "#" },
+      { id: 6, title: "Solutions", type: "Physical", class: "12", link: "#" },
+      { id: 7, title: "Electrochemistry", type: "Physical", class: "12", link: "#" },
+      { id: 8, title: "Chemical Kinetics", type: "Physical", class: "12", link: "#" },
+      { id: 9, title: "Periodic Table & Periodicity", type: "Inorganic", class: "11", link: "../chemistry/chem_element_names.html" },
+      { id: 10, title: "Chemical Bonding & Molecular Structure", type: "Inorganic", class: "11", link: "#" },
+      { id: 11, title: "p-Block Elements", type: "Inorganic", class: "11", link: "#" },
+      { id: 12, title: "d- and f-Block Elements", type: "Inorganic", class: "12", link: "../chemistry/uncomfortable.html" },
+      { id: 13, title: "Coordination Compounds", type: "Inorganic", class: "12", link: "#" },
+      { id: 14, title: "Organic Chemistry - Basic Principles (GOC)", type: "Organic", class: "11", link: "./some-basis-concepts-of-chemistry/index.html" },
+      { id: 15, title: "Hydrocarbons", type: "Organic", class: "11", link: "#" },
+      { id: 16, title: "Haloalkanes and Haloarenes", type: "Organic", class: "12", link: "#" },
+      { id: 17, title: "Alcohols, Phenols and Ethers", type: "Organic", class: "12", link: "#" },
+      { id: 18, title: "Aldehydes, Ketones and Carboxylic Acids", type: "Organic", class: "12", link: "#" },
+      { id: 19, title: "Amines", type: "Organic", class: "12", link: "#" },
+      { id: 20, title: "Biomolecules", type: "Organic", class: "12", link: "#" },
+      { id: 21, title: "Practical Chemistry", type: "Physical", class: "12", link: "#" }
+    ];
+
+    const grid = document.getElementById('chapterGrid');
+    const searchInput = document.getElementById('searchInput');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function renderChapters() {
+      grid.innerHTML = '';
+
+      const filtered = chapters.filter(chap => {
+        const matchesSearch = chap.title.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesFilter = currentFilter === 'all' 
+          || chap.type === currentFilter 
+          || chap.class === currentFilter;
+
+        return matchesSearch && matchesFilter;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No chapters found.</p>';
+        return;
+      }
+
+      filtered.forEach(chap => {
+        const card = document.createElement('a');
+        card.className = 'card';
+        card.href = chap.link;
+
+        card.innerHTML = `
+          <div>
+            <div class="badges">
+              <span class="badge ${chap.type.toLowerCase()}">${chap.type}</span>
+              <span class="badge class-tag">Class ${chap.class}</span>
+            </div>
+            <h3>${chap.title}</h3>
+          </div>
+          <div class="card-footer">
+            <span>Chapter ${chap.id}</span>
+            <span class="action-link">Practice &rarr;</span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderChapters();
+    });
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderChapters();
+      });
+    });
+
+    renderChapters();
+  </script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Some Basic Concepts of Chemistry | NEET Practice</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --badge-bg: rgba(56, 189, 248, 0.15);
+      --success: #34d399;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .nav-bar {
+      margin-bottom: 1.5rem;
+    }
+
+    .nav-bar a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    header {
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .meta {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    .badge {
+      background: var(--badge-bg);
+      color: var(--accent);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      margin: 2rem 0 1rem;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 0.5rem;
+    }
+
+    /* Formula Grid */
+    .formula-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .formula-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .formula-card h3 {
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .formula-box {
+      background-color: #0b1120;
+      padding: 0.75rem;
+      border-radius: 6px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      color: #e2e8f0;
+      border-left: 3px solid var(--accent);
+    }
+
+    .formula-card p {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Flashcard Section */
+    .flashcard {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .flashcard:hover {
+      border-color: var(--accent);
+    }
+
+    .flashcard .q {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .flashcard .hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .flashcard .ans {
+      display: none;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--card-border);
+      color: var(--success);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .flashcard.revealed .ans {
+      display: block;
+    }
+
+    /* Quick Tool */
+    .tool-box {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .tool-box input {
+      padding: 0.65rem 0.85rem;
+      border-radius: 6px;
+      border: 1px solid var(--card-border);
+      background-color: #0b1120;
+      color: var(--text);
+      outline: none;
+    }
+
+    .tool-box input:focus {
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-bar">
+    <a href="../index.html">&larr; Back to Chapters</a>
+  </div>
+
+  <header>
+    <div class="meta">
+      <span class="badge">Physical Chemistry</span>
+      <span>Class 11</span>
+      <span>•</span>
+      <span>Chapter 01</span>
+    </div>
+    <h1 style="margin-top: 0.5rem;">Some Basic Concepts of Chemistry</h1>
+    <p style="color: var(--text-muted);">Mole concept, stoichiometry, limiting reagent, and concentration units.</p>
+  </header>
+
+  <h2 class="section-title">Essential Formula Cards</h2>
+  <div class="formula-grid">
+    <div class="formula-card">
+      <h3>Number of Moles (n)</h3>
+      <div class="formula-box">n = w / M = N / N_A = V / 22.4 L (STP)</div>
+      <p>w = mass in grams, M = molar mass, N = number of particles, N_A = 6.022 × 10²³.</p>
+    </div>
+
+    <div class="formula-card">
+      <h3>Molarity (M)</h3>
+      <div class="formula-box">M = (w_B × 1000) / (M_B × V_sol in mL)</div>
+      <p>Temperature dependent. Number of moles of solute dissolved per litre of solution.</p>
+    </div>
+
+    <div class="formula-card">
+      <h3>Molality (m)</h3>
+      <div class="formula-box">m = (w_B × 1000) / (M_B × W_solvent in g)</div>
+      <p>Temperature independent. Number of moles of solute per kg of solvent.</p>
+    </div>
+
+    <div class="formula-card">
+      <h3>Mole Fraction (X)</h3>
+      <div class="formula-box">X_A = n_A / (n_A + n_B) ; X_A + X_B = 1</div>
+      <p>Unitless and temperature independent ratio of moles of a component to total moles.</p>
+    </div>
+
+    <div class="formula-card">
+      <h3>Empirical to Molecular Formula</h3>
+      <div class="formula-box">Molecular Formula = n × (Empirical Formula)</div>
+      <p>n = (Molar mass) / (Empirical formula mass).</p>
+    </div>
+
+    <div class="formula-card">
+      <h3>Dilution Formula</h3>
+      <div class="formula-box">M1 × V1 = M2 × V2</div>
+      <p>For mixing solutions of the same solute: M_mix = (M1V1 + M2V2) / (V1 + V2).</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">Quick Recall Flashcards (Click to reveal)</h2>
+  
+  <div class="flashcard" onclick="this.classList.toggle('revealed')">
+    <div class="q">
+      <span>What is the volume occupied by 1 mole of an ideal gas at standard STP (273.15 K, 1 bar)?</span>
+      <span class="hint">Click to flip</span>
+    </div>
+    <div class="ans">
+      <strong>22.7 L</strong> (Under older convention at 1 atm it was 22.4 L).
+    </div>
+  </div>
+
+  <div class="flashcard" onclick="this.classList.toggle('revealed')">
+    <div class="q">
+      <span>Which concentration terms are independent of temperature?</span>
+      <span class="hint">Click to flip</span>
+    </div>
+    <div class="ans">
+      <strong>Molality (m)</strong>, <strong>Mole fraction (X)</strong>, and <strong>Mass percentage (% w/w)</strong> (because mass does not depend on temperature).
+    </div>
+  </div>
+
+  <div class="flashcard" onclick="this.classList.toggle('revealed')">
+    <div class="q">
+      <span>How do you find the Limiting Reagent in a reaction?</span>
+      <span class="hint">Click to flip</span>
+    </div>
+    <div class="ans">
+      Divide given moles of each reactant by its stoichiometric coefficient in the balanced equation: <code>(Moles / Stoichiometric Coefficient)</code>. The smallest value represents the limiting reagent.
+    </div>
+  </div>
+
+  <h2 class="section-title">Quick Molecular Weight Checker</h2>
+  <div class="tool-box">
+    <label for="molInput" style="font-size: 0.9rem; color: var(--text-muted);">Common Compound Mass Quick-check:</label>
+    <select id="molSelect" style="padding: 0.6rem; border-radius: 6px; background-color: #0b1120; color: #fff; border: 1px solid var(--card-border);">
+      <option value="18.015">Water (H2O) - 18.015 g/mol</option>
+      <option value="44.01">Carbon Dioxide (CO2) - 44.01 g/mol</option>
+      <option value="98.07">Sulfuric Acid (H2SO4) - 98.07 g/mol</option>
+      <option value="58.44">Sodium Chloride (NaCl) - 58.44 g/mol</option>
+      <option value="180.16">Glucose (C6H12O6) - 180.16 g/mol</option>
+      <option value="60.06">Urea (NH2CONH2) - 60.06 g/mol</option>
+    </select>
+  </div>
+
+</body>
+</html>
