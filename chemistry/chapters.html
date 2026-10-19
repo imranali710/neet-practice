@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>All Chemistry Chapters</title>
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <script defer src="../assets/js/layout.js"></script>
+</head>
+<body data-subject="chemistry" data-parent="Chemistry Hub" data-back="index.html"
+      data-title="All Chapters" 
+      data-subtitle="Search and select a chapter to review">
+
+  <!-- Search Input -->
+  <input type="text" id="chapterSearch" class="quiz-option" 
+         style="margin-bottom: 1rem; cursor: text;" 
+         placeholder="Search by chapter name or keyword...">
+
+  <!-- Filter Pills -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="Physical">Physical</button>
+    <button class="filter-btn" data-filter="Inorganic">Inorganic</button>
+    <button class="filter-btn" data-filter="Organic">Organic</button>
+    <button class="filter-btn" data-filter="11">Class 11</button>
+    <button class="filter-btn" data-filter="12">Class 12</button>
+  </div>
+
+  <!-- Full Chapter List -->
+  <div class="card-grid" id="chapterContainer">
+    <p style="color: var(--text-muted); font-size: 0.9rem;">Loading chapters...</p>
+  </div>
+
+  <script>
+    let chapterList = [];
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    const container = document.getElementById('chapterContainer');
+    const searchInput = document.getElementById('chapterSearch');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    // Read ?filter= from URL if arriving from a branch card on index.html
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialFilter = urlParams.get('filter');
+    if (initialFilter) {
+      currentFilter = initialFilter;
+      filterBtns.forEach(b => {
+        b.classList.toggle('active', b.dataset.filter === initialFilter);
+      });
+    }
+
+    fetch('data/chapters.json')
+      .then(res => res.json())
+      .then(data => {
+        chapterList = Array.isArray(data) ? data : (data.chapters || []);
+        render();
+      })
+      .catch(() => {
+        container.innerHTML = '<p style="color: var(--wrong-text);">Failed to load data/chapters.json</p>';
+      });
+
+    function render() {
+      container.innerHTML = '';
+
+      const filtered = chapterList.filter(item => {
+        const matchesSearch = item.title.toLowerCase().includes(searchQuery) ||
+                              item.desc.toLowerCase().includes(searchQuery) ||
+                              item.category.toLowerCase().includes(searchQuery);
+
+        const matchesFilter = currentFilter === 'all' || 
+                              item.category === currentFilter || 
+                              item.class === currentFilter;
+
+        return matchesSearch && matchesFilter;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">No matching chapters found.</p>';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement('a');
+        card.className = 'card';
+        card.href = item.link;
+        card.innerHTML = `
+          <span class="badge chemistry">${item.category} • Class ${item.class}</span>
+          <h3>${item.title}</h3>
+          <p>${item.desc}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Live search listener
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      render();
+    });
+
+    // Filter chip listeners
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        render();
+      });
+    });
+  </script>
+</body>
+</html>

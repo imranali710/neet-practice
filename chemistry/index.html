@@ -3,99 +3,122 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>NEET Chemistry Chapters</title>
+  <title>NEET Chemistry Hub</title>
   <link rel="stylesheet" href="../assets/css/theme.css">
   <script defer src="../assets/js/layout.js"></script>
 </head>
 <body data-subject="chemistry" data-parent="All Subjects" data-back="../index.html"
-      data-title="Chemistry Chapters" 
-      data-subtitle="Physical, Inorganic, and Organic Chemistry">
+      data-title="Chemistry Hub" 
+      data-subtitle="Select a branch or general practice drill">
 
-  <!-- Search Input -->
-  <input type="text" id="chapterSearch" class="quiz-option" 
-         style="margin-bottom: 1.25rem; cursor: text;" 
-         placeholder="Search by chapter name or type (e.g. Mole, Organic)...">
+  <!-- Primary Portal: All Chapters Directory -->
+  <div style="margin-bottom: 1.5rem;">
+    <a href="chapters.html" class="card" style="background-color: var(--chem-bg); border-color: var(--chem-accent);">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <span class="badge chemistry">Full Syllabus</span>
+          <h3 style="margin-top: 0.35rem;">Browse All Chapters &rarr;</h3>
+          <p>Search and filter all Class 11 & 12 Physical, Inorganic, and Organic chapters.</p>
+        </div>
+      </div>
+    </a>
+  </div>
 
-  <!-- Quick Access Horizontal Bar -->
-  <div id="quickAccessSection" style="display: none;">
+  <!-- Quick Access Section -->
+  <div id="quickAccessSection" style="display: none; margin-bottom: 1.5rem;">
     <div class="section-label">Quick Access</div>
     <div class="quick-access-scroll" id="quickAccessContainer"></div>
   </div>
 
-  <!-- Main Chapter List -->
-  <div class="section-label">All Chapters</div>
-  <div class="card-grid" id="chapterContainer">
-    <p style="color: var(--text-muted); font-size: 0.9rem;">Loading chapters...</p>
+  <div class="section-label">General Tools</div>
+  <div class="card-grid" style="margin-bottom: 1.75rem;">
+    <a href="chem_element_names.html" class="card">
+      <span class="badge chemistry">Physical</span>
+      <h3>Element Names & Symbols</h3>
+      <p>Learn the names and symbols of all elements in the periodic table.</p>
+    </a>
+    <a href="chem_functional_group.html" class="card">
+      <span class="badge chemistry">Organic</span>
+      <h3>Functional Groups</h3>
+      <p>Learn about different functional groups and their properties.</p>
+    </a>
+  </div>
+
+  <!-- Main Chemistry Branches -->
+  <div class="section-label">Chemistry Branches</div>
+  <div class="card-grid" style="margin-bottom: 1.75rem;">
+    <a href="chapters.html?filter=Physical" class="card">
+      <span class="badge chemistry">Physical</span>
+      <h3>Physical Chemistry</h3>
+      <p>Mole concept, thermodynamics, kinetics, equilibrium, and numericals.</p>
+    </a>
+
+    <a href="chapters.html?filter=Inorganic" class="card">
+      <span class="badge chemistry">Inorganic</span>
+      <h3>Inorganic Chemistry</h3>
+      <p>Periodic trends, bonding, coordination compounds, and block elements.</p>
+    </a>
+
+    <a href="chapters.html?filter=Organic" class="card">
+      <span class="badge chemistry">Organic</span>
+      <h3>Organic Chemistry</h3>
+      <p>GOC, reaction mechanisms, functional groups, and named reactions.</p>
+    </a>
+  </div>
+
+  <!-- General Practice & Special Tools (Non-chapter specific) -->
+  <div id="generalToolsSection" style="margin-bottom: 1.75rem;">
+    <div class="section-label">General Practice & Drills</div>
+    <div class="card-grid" id="generalToolsContainer"></div>
   </div>
 
   <script>
-    let chapterData = [];
-    const container = document.getElementById('chapterContainer');
-    const quickContainer = document.getElementById('quickAccessContainer');
     const quickSection = document.getElementById('quickAccessSection');
-    const searchInput = document.getElementById('chapterSearch');
+    const quickContainer = document.getElementById('quickAccessContainer');
+    const generalToolsContainer = document.getElementById('generalToolsContainer');
 
-    // 1. Fetch content from JSON
     fetch('data/chapters.json')
       .then(res => res.json())
       .then(data => {
-        chapterData = data;
-        renderQuickAccess(data);
-        renderChapters(data);
+        const chapters = Array.isArray(data) ? data : (data.chapters || []);
+        const tools = data.generalTools || [];
+
+        // 1. Render Quick Access Pills
+        const pinned = chapters.filter(c => c.quickAccess);
+        if (pinned.length > 0) {
+          quickSection.style.display = 'block';
+          quickContainer.innerHTML = '';
+          pinned.forEach(c => {
+            const pill = document.createElement('a');
+            pill.className = 'quick-pill';
+            pill.href = c.link;
+            pill.innerHTML = `<span class="quick-dot"></span>${c.title}`;
+            quickContainer.appendChild(pill);
+          });
+        }
+
+        // 2. Render General Tools
+        if (tools.length > 0) {
+          generalToolsContainer.innerHTML = '';
+          tools.forEach(tool => {
+            const card = document.createElement('a');
+            card.className = 'card';
+            card.href = tool.link;
+            card.style.borderLeft = "4px solid var(--chem-accent)";
+            card.innerHTML = `
+              <span class="badge chemistry">${tool.tag}</span>
+              <h3>${tool.title}</h3>
+              <p>${tool.desc}</p>
+            `;
+            generalToolsContainer.appendChild(card);
+          });
+        } else {
+          document.getElementById('generalToolsSection').style.display = 'none';
+        }
       })
-      .catch(err => {
-        container.innerHTML = '<p style="color: var(--wrong-text);">Failed to load data/chapters.json</p>';
+      .catch(() => {
+        document.getElementById('generalToolsSection').style.display = 'none';
       });
-
-    // 2. Render horizontal quick-access pills
-    function renderQuickAccess(list) {
-      const pinned = list.filter(item => item.quickAccess);
-      if (pinned.length === 0) return;
-
-      quickSection.style.display = 'block';
-      quickContainer.innerHTML = '';
-      
-      pinned.forEach(item => {
-        const pill = document.createElement('a');
-        pill.className = 'quick-pill';
-        pill.href = item.link;
-        pill.innerHTML = `<span class="quick-dot"></span>${item.title}`;
-        quickContainer.appendChild(pill);
-      });
-    }
-
-    // 3. Render full chapter card grid
-    function renderChapters(list) {
-      container.innerHTML = '';
-      
-      if (list.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">No matching chapters found.</p>';
-        return;
-      }
-
-      list.forEach(item => {
-        const card = document.createElement('a');
-        card.className = 'card';
-        card.href = item.link;
-        card.innerHTML = `
-          <span class="badge chemistry">${item.category} • Class ${item.class}</span>
-          <h3>${item.title}</h3>
-          <p>${item.desc}</p>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    // 4. Instant Search Filter
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      const filtered = chapterData.filter(item => 
-        item.title.toLowerCase().includes(query) ||
-        item.category.toLowerCase().includes(query) ||
-        item.desc.toLowerCase().includes(query)
-      );
-      renderChapters(filtered);
-    });
   </script>
 </body>
 </html>
